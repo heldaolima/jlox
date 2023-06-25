@@ -197,7 +197,6 @@ public class Scanner {
   }
 
   private boolean isAtEnd() {
-    System.out.print(current >= source.length() ? "is at end!" + source.charAt(current-1) + "\n": "");
     return current >= source.length();
   }
   
