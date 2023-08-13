@@ -7,14 +7,17 @@ import java.util.List;
 
 public class GenerateAST {
   public static void main(String[] args) throws IOException {
+    String outputDir;
     if (args.length != 1) {
-      System.err.println("Usage: generate_ast <output directory>");
-      System.exit(64);
-    }
-    String outputDir = args[0];
+      outputDir = ".";
+      // System.err.println("Usage: generate_ast <output directory>");
+      // System.exit(64);
+    } else outputDir = args[0];
+
     definesAst(outputDir, "Expr", Arrays.asList(
         "Assign   : Token name, Expr value",
         "Binary   : Expr left, Token operator, Expr right",
+        "Call     : Expr callee, Token paren, List<Expr> arguments",
         "Grouping : Expr expression",
         "Literal  : Object value",
         "Logical  : Expr left, Token operator, Expr right",
@@ -25,8 +28,10 @@ public class GenerateAST {
     definesAst(outputDir, "Stmt", Arrays.asList(
       "Block      : List<Stmt> statements",
       "Expression : Expr expression",
+      "Function   : Token name, List<Token> params, List<Stmt> body",
       "If         : Expr condition, Stmt thenBranch, Stmt elseBranch",
       "Print      : Expr expression",
+      "Return     : Token keyword, Expr value",
       "Var        : Token name, Expr initializer",
       "While      : Expr condition, Stmt body"
     ));
