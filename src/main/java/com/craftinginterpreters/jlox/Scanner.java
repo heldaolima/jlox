@@ -38,6 +38,7 @@ public class Scanner {
   private int line = 1;
   
   Scanner(String source) {
+    System.out.println(source);
     this.source = source;
   }
 
@@ -81,6 +82,9 @@ public class Scanner {
         if (match('/')) {
           // a comment goes until the end of the line
           while (peek() != '\n' && !isAtEnd()) advance();
+        
+        } else if (match('*')) {
+          blockComment();
         } else {
           addToken(SLASH);
         }
@@ -148,6 +152,17 @@ public class Scanner {
     String value = source.substring(start + 1, current - 1);
     addToken(STRING, value);
   }
+
+  private void blockComment() {
+    while (peek() != '*' && peekNext() != '/' && !isAtEnd()) {
+      if (peek() == '\n') line++;
+      advance();
+    }
+    
+    advance(); // *
+    advance(); // /
+    return;
+  }
   
   private boolean match(char expected) {
     if (isAtEnd()) return false;
@@ -182,6 +197,7 @@ public class Scanner {
   }
 
   private boolean isAtEnd() {
+    System.out.print(current >= source.length() ? "is at end!" + source.charAt(current-1) + "\n": "");
     return current >= source.length();
   }
   
