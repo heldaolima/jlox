@@ -38,7 +38,6 @@ public class Scanner {
   private int line = 1;
   
   Scanner(String source) {
-    System.out.println(source);
     this.source = source;
   }
 
@@ -103,7 +102,6 @@ public class Scanner {
         } else if (isAlpha(c)) {
           identifier();
         } else {
-          System.out.println(source.substring(start, current));
           Lox.error(line, "Unexpected character.");
         }
         break;
